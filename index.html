@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка сайтов под ключ | Лендинги, визитки, сопровождение</title>
+    <meta name="description" content="Создаю одностраничные сайты, лендинги и визитки с формами заявок, картами и уведомлениями. Сопровождение и доработка сайтов.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lime: #c6f24e;
+            --lime-dark: #a8d63a;
+            --dark: #0a0a0a;
+            --dark-2: #141414;
+            --dark-3: #1c1c1c;
+            --gray: #888;
+            --gray-light: #b0b0b0;
+            --white: #ffffff;
+            --border: #2a2a2a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* =============== NAV =============== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: background 0.3s, backdrop-filter 0.3s;
+        }
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 20px;
+        }
+        .nav-logo::before {
+            content: '✦';
+            color: var(--lime);
+            font-size: 22px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 15px;
+            color: var(--gray-light);
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--lime); }
+        .nav-cta {
+            background: var(--lime);
+            color: var(--dark);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s, background 0.3s;
+        }
+        .nav-cta:hover { background: var(--lime-dark); transform: translateY(-2px); }
+
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* =============== HERO =============== */
+        .hero {
+            padding: 120px 0 60px;
+        }
+        .hero-card {
+            background: var(--white);
+            color: var(--dark);
+            border-radius: 32px;
+            padding: 60px 50px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444;
+        }
+        .hero-badge::before {
+            content: '✦';
+            color: var(--lime-dark);
+            font-size: 16px;
+        }
+        .hero-social {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .hero-social span { cursor: pointer; transition: color 0.3s; }
+        .hero-social span:hover { color: var(--dark); }
+
+        .hero-title {
+            font-size: clamp(38px, 6vw, 76px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+            max-width: 900px;
+        }
+        .hero-title .accent {
+            display: inline-block;
+            color: var(--lime-dark);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            align-items: end;
+            margin-top: 20px;
+        }
+        .hero-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .hero-desc .lime-mark {
+            color: var(--lime-dark);
+            font-weight: 600;
+        }
+
+        .hero-illustration {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .hero-illustration .circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8e8e8, #f5f5f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            position: relative;
+        }
+        .hero-illustration .circle::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 1px dashed #d0d0d0;
+        }
+
+        .hero-exp {
+            text-align: right;
+        }
+        .hero-exp .stars {
+            color: var(--lime-dark);
+            font-size: 20px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        .hero-exp .years {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .hero-exp .years-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: var(--lime);
+            color: var(--dark);
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s, background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover { background: var(--lime-dark); transform: translateY(-2px); }
+        .btn-dark {
+            background: var(--dark);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s, background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-dark:hover { background: #222; transform: translateY(-2px); }
+
+        /* =============== STATS =============== */
+        .stats {
+            padding: 60px 0;
+        }
+        .stats-grid {
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .stat-item {
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--lime);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* =============== SECTION HEADINGS =============== */
+        .section {
+            padding: 80px 0;
+        }
+        .section-tag {
+            display: inline-block;
+            background: var(--lime);
+            color: var(--dark);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+        .section-title .accent { color: var(--lime); }
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--gray-light);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* =============== SERVICES =============== */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 50px;
+        }
+        .service-row {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: center;
+            gap: 30px;
+            padding: 30px 20px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s, padding 0.3s;
+            cursor: pointer;
+        }
+        .service-row:hover {
+            background: var(--dark-2);
+            padding-left: 30px;
+        }
+        .service-row:first-child { border-top: 1px solid var(--border); }
+        .service-num {
+            font-size: 15px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        .service-name {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        .service-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+        .service-row:hover .service-arrow {
+            background: var(--lime);
+            color: var(--dark);
+            border-color: var(--lime);
+        }
+        .service-desc {
+            grid-column: 2 / 3;
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 8px;
+            display: none;
+        }
+        .service-row:hover .service-desc { display: block; }
+
+        /* =============== PROCESS =============== */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 50px;
+        }
+        .process-card {
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .process-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--lime);
+        }
+        .process-num {
+            width: 50px;
+            height: 50px;
+            background: var(--lime);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .process-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .process-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* =============== PORTFOLIO =============== */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 50px;
+        }
+        .portfolio-card {
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--lime);
+        }
+        .portfolio-img {
+            height: 220px;
+            background: linear-gradient(135deg, #222, #333);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            border-bottom: 1px solid var(--border);
+        }
+        .portfolio-body {
+            padding: 24px;
+        }
+        .portfolio-body h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .portfolio-body p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .portfolio-tags span {
+            background: rgba(198, 242, 78, 0.1);
+            color: var(--lime);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* =============== INCLUDES =============== */
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 50px;
+        }
+        .include-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 24px;
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: border-color 0.3s;
+        }
+        .include-item:hover { border-color: var(--lime); }
+        .include-item::before {
+            content: '✓';
+            color: var(--lime);
+            font-weight: 800;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* =============== CTA FORM =============== */
+        .cta-section {
+            background: var(--lime);
+            color: var(--dark);
+            border-radius: 32px;
+            padding: 60px 50px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        .cta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .cta-left h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+        .cta-left p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .cta-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .cta-features div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .cta-features div::before {
+            content: '✓';
+            font-weight: 800;
+        }
+
+        .cta-form {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .cta-form h3 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+        .cta-form .form-sub {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 22px;
+        }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--lime-dark);
+            background: #fff;
+        }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--dark);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 8px;
+        }
+        .form-submit:hover { background: #222; transform: translateY(-2px); }
+
+        .form-note {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        /* =============== FOOTER =============== */
+        footer {
+            background: var(--dark-2);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-brand::before { content: '✦'; color: var(--lime); }
+        .footer-desc {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+            max-width: 300px;
+        }
+        .footer-col h4 {
+            font-size: 14px;
+            color: var(--lime);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        .footer-col a, .footer-col p {
+            display: block;
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--lime); }
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* =============== RESPONSIVE =============== */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark-2);
+                padding: 24px;
+                border-bottom: 1px solid var(--border);
+                gap: 16px;
+            }
+            .burger { display: block; }
+            .nav-cta { display: none; }
+
+            .hero { padding: 100px 0 40px; }
+            .hero-card { padding: 40px 25px; border-radius: 24px; }
+            .hero-content { grid-template-columns: 1fr; gap: 30px; }
+            .hero-illustration { order: -1; }
+            .hero-exp { text-align: left; }
+            .hero-social { display: none; }
+
+            .stats-grid { grid-template-columns: 1fr 1fr; padding: 30px 20px; }
+            .stat-item { border-right: none; }
+            .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat-value { font-size: 28px; }
+
+            .service-row { grid-template-columns: 50px 1fr auto; gap: 15px; padding: 20px 10px; }
+            .service-row:hover { padding-left: 15px; }
+            .service-name { font-size: 18px; }
+            .service-arrow { width: 36px; height: 36px; font-size: 14px; }
+
+            .cta-section { padding: 40px 25px; border-radius: 24px; }
+            .cta-grid { grid-template-columns: 1fr; gap: 40px; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <div class="nav-logo">WebCraft</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#process">Как работаю</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+            <a href="#form" class="nav-cta">Заказать сайт</a>
+            <button class="burger" id="burger">☰</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-card">
+                <div class="hero-top">
+                    <div class="hero-badge">Веб-разработка под ключ</div>
+                    <div class="hero-social">
+                        <span>Telegram</span>
+                        <span>WhatsApp</span>
+                        <span>ВКонтакте</span>
+                    </div>
+                </div>
+
+                <h1 class="hero-title">
+                    Создаю сайты,<br>
+                    которые <span class="accent">приносят заявки</span>
+                </h1>
+
+                <div class="hero-content">
+                    <div class="hero-desc">
+                        <p>Одностраничные сайты, лендинги и визитки с формами заявок, картами и уведомлениями. <span class="lime-mark">Быстро, недорого, под ключ.</span></p>
+                        <div class="hero-buttons">
+                            <a href="#form" class="btn-primary">Обсудить проект →</a>
+                            <a href="#portfolio" class="btn-dark">Примеры работ</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-illustration">
+                        <div class="circle">💻</div>
+                    </div>
+
+                    <div class="hero-exp">
+                        <div class="stars">★★★★★</div>
+                        <div class="years">5+</div>
+                        <div class="years-label">лет опыта<br>в веб-разработке</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">30+</div>
+                    <div class="stat-label">Проектов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5+</div>
+                    <div class="stat-label">Лет опыта</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Поддержка</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-tag">Услуги</div>
+            <h2 class="section-title">Что я <span class="accent">делаю</span></h2>
+            <p class="section-subtitle">Полный цикл: от идеи и структуры до готового сайта с формой, картой и уведомлениями</p>
+
+            <div class="services-list">
+                <div class="service-row">
+                    <div class="service-num">01</div>
+                    <div>
+                        <div class="service-name">Одностраничный сайт / лендинг</div>
+                        <div class="service-desc">Одна страница с блоками: о вас, услуги, портфолио, форма заявки, карта, контакты.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-num">02</div>
+                    <div>
+                        <div class="service-name">Сайт-визитка</div>
+                        <div class="service-desc">Компактный сайт для услуг, мастеров, кафе, магазинов. Всё главное — на одном экране.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-num">03</div>
+                    <div>
+                        <div class="service-name">Формы заявок и уведомления</div>
+                        <div class="service-desc">Форма обратной связи с отправкой на email, в Telegram, MAX или WhatsApp.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-num">04</div>
+                    <div>
+                        <div class="service-name">Интеграция Яндекс-карт</div>
+                        <div class="service-desc">Карта с меткой вашего адреса, маршрутами и схемой проезда.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-num">05</div>
+                    <div>
+                        <div class="service-name">Сопровождение сайтов</div>
+                        <div class="service-desc">Обновление контента, добавление страниц, исправление ошибок, техподдержка, консультации.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-num">06</div>
+                    <div>
+                        <div class="service-name">Доработка существующего сайта</div>
+                        <div class="service-desc">Добавлю блок, форму, карту, галерею, изменю дизайн, ускорю загрузку.</div>
+                    </div>
+                    <div class="service-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process">
+        <div class="container">
+            <div class="section-tag">Процесс</div>
+            <h2 class="section-title">Как я <span class="accent">работаю</span></h2>
+            <p class="section-subtitle">Прозрачный процесс — вы всегда знаете, на каком этапе проект</p>
+
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-num">1</div>
+                    <h3>Обсуждаем задачу</h3>
+                    <p>Вы рассказываете, какой сайт нужен, для чего, какие функции важны и какой бюджет.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-num">2</div>
+                    <h3>Готовлю прототип</h3>
+                    <p>Показываю структуру будущего сайта: блоки, разделы, формы. Согласовываем детали.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-num">3</div>
+                    <h3>Верстаю и программирую</h3>
+                    <p>Создаю дизайн, пишу код, подключаю формы, карты и уведомления. Показываю промежуточный результат.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-num">4</div>
+                    <h3>Передаю готовый сайт</h3>
+                    <p>Загружаю на хостинг, настраиваю почту и уведомления, показываю, как всё работает. Остаюсь на связи.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-tag">Портфолио</div>
+            <h2 class="section-title">Примеры <span class="accent">работ</span></h2>
+            <p class="section-subtitle">Реальные проекты, которые уже работают и приносят заявки</p>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-img">🏛️</div>
+                    <div class="portfolio-body">
+                        <h3>Кафе-бар «СССР»</h3>
+                        <p>Сайт для кафе в Верхней Пышме. Форма бронирования столика, меню, галерея, карта, отправка заявок на email.</p>
+                        <div class="portfolio-tags">
+                            <span>Лендинг</span>
+                            <span>Форма заявки</span>
+                            <span>Карта</span>
+                            <span>Уведомления</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-img">🍽️</div>
+                    <div class="portfolio-body">
+                        <h3>Кафе «Обжорка»</h3>
+                        <p>Сайт придорожного кафе в Пышме. Меню с ценами, схема проезда, карта, форма заказа, галерея из 4 фото.</p>
+                        <div class="portfolio-tags">
+                            <span>Визитка</span>
+                            <span>Меню</span>
+                            <span>Схема проезда</span>
+                            <span>Карта</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-img">💼</div>
+                    <div class="portfolio-body">
+                        <h3>Ваш проект</h3>
+                        <p>Здесь может быть ваш сайт. Расскажите о задаче — сделаю так же качественно и под ключ.</p>
+                        <div class="portfolio-tags">
+                            <span>Под ключ</span>
+                            <span>Индивидуально</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INCLUDES -->
+    <section class="section">
+        <div class="container">
+            <div class="section-tag">Что входит</div>
+            <h2 class="section-title">Всё, что нужно <span class="accent">для запуска</span></h2>
+            <p class="section-subtitle">Без скрытых доплат — вы получаете готовый рабочий сайт</p>
+
+            <div class="includes-grid">
+                <div class="include-item">Разработка структуры сайта</div>
+                <div class="include-item">Адаптивный дизайн</div>
+                <div class="include-item">Вёрстка HTML / CSS</div>
+                <div class="include-item">Форма заявки с отправкой</div>
+                <div class="include-item">Яндекс-карта с меткой</div>
+                <div class="include-item">Галерея и меню</div>
+                <div class="include-item">Помощь с доменом и хостингом</div>
+                <div class="include-item">Настройка email-уведомлений</div>
+                <div class="include-item">Обучение управлению сайтом</div>
+                <div class="include-item">Сопровождение после запуска</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FORM -->
+    <section class="cta-section" id="form">
+        <div class="cta-grid">
+            <div class="cta-left">
+                <h2>Оставьте заявку — обсудим ваш проект</h2>
+                <p>Расскажите о задаче, и я свяжусь с вами в течение дня. Консультация — бесплатно.</p>
+                <div class="cta-features">
+                    <div>Ответ в течение 2 часов</div>
+                    <div>Бесплатная консультация</div>
+                    <div>Оценка проекта в день обращения</div>
+                    <div>Работаю по всей России</div>
+                </div>
+            </div>
+
+            <div class="cta-form">
+                <h3>Заказать сайт</h3>
+                <p class="form-sub">Заполните форму — я свяжусь с вами</p>
+
+                <form action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="89f7f817-6513-48f6-a9c2-577d4f579e6f">
+                    <input type="hidden" name="redirect" value="thanks.html">
+                    <input type="hidden" name="subject" value="🔔 Новая заявка с сайта WebCraft">
+                    <input type="checkbox" name="botcheck" style="display:none !important" tabindex="-1" autocomplete="off">
+
+                    <div class="form-group">
+                        <label for="name">Ваше имя *</label>
+                        <input type="text" id="name" name="name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="ivan@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Опишите задачу *</label>
+                        <textarea id="comments" name="comments" rows="3" placeholder="Какой сайт нужен, для чего, какие функции важны..." required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Отправить заявку</button>
+                    <p class="form-note">* Обязательные поля. Ваши данные не передаются третьим лицам.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacts">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">WebCraft</div>
+                    <p class="footer-desc">Создаю сайты, которые работают и приносят заявки. Одностраничники, лендинги, визитки, сопровождение.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Услуги</h4>
+                    <a href="#services">Лендинги</a>
+                    <a href="#services">Сайты-визитки</a>
+                    <a href="#services">Формы заявок</a>
+                    <a href="#services">Сопровождение</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                    <a href="mailto:your@mail.ru">your@mail.ru</a>
+                    <a href="https://wa.me/79991234567">WhatsApp</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Информация</h4>
+                    <p>Работаю удалённо</p>
+                    <p>Пн–Пт: 10:00–19:00</p>
+                    <p>Ответ в течение дня</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 WebCraft. Создание сайтов под ключ. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Меню-бургер для мобильных
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Смена фона навигации при скролле
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Плавное закрытие меню после клика по ссылке
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
